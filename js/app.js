@@ -22,11 +22,23 @@ function onReady() {
  * Also the keyword 'this' will refer to the form that is being submitted while inside this function.
  * */
 function onSubmit(evt) {
-    if (evt.preventDefault) {
+    var valid = validateForm(this);
+
+    //if the form is invalid and the event object has a method called preventDefault,
+    //call it to stop the form from being submitted to the server
+    //this method is now part of the standard, but it's new, so older browsers
+    //will not expose this method on the event object
+    if (!valid && evt.preventDefault) {
         evt.preventDefault();
     }
-    evt.returnValue = validateForm(this);
-    return evt.returnValue;
+
+    //some older browsers will look at the returnValue property of the event object
+    //while other older browsers will pay attention to the value returned from
+    //the event handler function itself
+    //to catch both cases, we will set the returnValue property to our valid variable
+    //AND return the valid variable's value from our function
+    evt.returnValue = valid;
+    return valid;
 } //onSubmit()
 
 
