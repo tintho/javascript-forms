@@ -22,6 +22,9 @@ function onReady() {
  * Also the keyword 'this' will refer to the form that is being submitted while inside this function.
  * */
 function onSubmit(evt) {
+    if (evt.preventDefault) {
+        evt.preventDefault();
+    }
     evt.returnValue = validateForm(this);
     return evt.returnValue;
 } //onSubmit()
